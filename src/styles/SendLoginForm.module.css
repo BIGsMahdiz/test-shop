@@ -1,0 +1,20 @@
+.back {
+  background-image: url(/backAuth.jpg) !important;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.login {
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(2px);
+}
+
+.textan {
+  font-size: 60px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: grey;
+  position: relative;
+  animation: glow-and-blur 5s ease-in-out infinite;
+}

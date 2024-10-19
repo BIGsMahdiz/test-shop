@@ -1,0 +1,10 @@
+.searchResult {
+  position: absolute;
+  top: 10%;
+  background-color: #ecf0f1;
+  width: 420px;
+  max-height: 500px;
+  border-radius: 7px;
+  z-index: 3;
+  overflow-y: scroll;
+}

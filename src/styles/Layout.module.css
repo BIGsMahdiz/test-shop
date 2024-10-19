@@ -1,0 +1,13 @@
+/* .main {
+  background-image: url(/back3.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh !important;
+} */
+
+.main {
+  /* background-color: #f4f6ff; */
+  min-height: 100vh;
+}
