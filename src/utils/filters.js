@@ -27,4 +27,20 @@ const getInitialQuery = (searchParams) => {
   return query;
 };
 
+// const getInitialQuery = () => {
+//   const query = {};
+//   const category = JSON.parse(localStorage.getItem("category"));
+//   const search = JSON.parse(localStorage.getItem("search"));
+//   if (category) query.category = category;
+//   if (search) query.search = search;
+//   return query;
+// };
+
+// const saveQuery = (searchParams) => {
+//   const search = searchParams.get("search");
+//   const category = searchParams.get("category");
+//   if (search) localStorage.setItem("search", JSON.stringify(search));
+//   if (category) localStorage.setItem("category", JSON.stringify(category));
+// };
+
 export { categoryFilter, createQueryObject, getInitialQuery };

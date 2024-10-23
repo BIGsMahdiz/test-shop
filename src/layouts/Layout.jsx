@@ -38,7 +38,7 @@ import { getProfile } from "@/services/profile";
 import styles from "@/styles/Layout.module.css";
 import Loader from "@/components/modules/Loader";
 import Dropdown from "@/components/modules/Dropdown";
-import { useQueryF } from "@/contexts/Filters";
+import { useQueryF, useSearchResult } from "@/contexts/Filters";
 import { createQueryObject } from "@/utils/filters";
 
 function Layout({ children }) {
@@ -49,6 +49,7 @@ function Layout({ children }) {
   const [debouncedSearchValue, setDebouncedSearchValue] = useState("");
 
   const [query, setQuery] = useQueryF();
+  const [searchResult, setSearchResult] = useSearchResult();
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -75,11 +76,8 @@ function Layout({ children }) {
     event.preventDefault();
 
     if (!data && !data.data) return;
-    navigate("/search-explore", {
-      state: {
-        searchResults: data?.data,
-      },
-    });
+    setSearchResult(data.data);
+    navigate("/search-explore");
     setQuery((prev) =>
       createQueryObject(prev, { search: debouncedSearchValue })
     );

@@ -19,15 +19,14 @@ import {
   getInitialQuery,
 } from "@/utils/filters";
 import Loader from "@/components/modules/Loader";
-import { useQueryF } from "@/contexts/Filters";
+import { useQueryF, useSearchResult } from "@/contexts/Filters";
 
 function SearchExplore() {
-  const location = useLocation();
-  const searchResults = location.state?.searchResults || [];
-  const [searchParams, setSearchParams] = useSearchParams();
   const [display, setDisplay] = useState([]);
   const [query, setQuery] = useQueryF();
-  console.log(query);
+  const [searchResult, setSearchResult] = useSearchResult();
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { isLoading, data } = useQuery({
     queryKey: ["getAllCategories"],
@@ -35,13 +34,12 @@ function SearchExplore() {
   });
 
   useEffect(() => {
-    setDisplay(searchResults);
-    // setQuery(getInitialQuery(searchParams));
-  }, [searchResults]);
+    setDisplay(searchResult);
+  }, [searchResult]);
 
   useEffect(() => {
     setSearchParams(query);
-    let filteredData = categoryFilter(searchResults, query.category);
+    let filteredData = categoryFilter(searchResult, query.category);
 
     setDisplay(filteredData);
   }, [query]);
@@ -54,7 +52,9 @@ function SearchExplore() {
 
     if (!closestEl) return;
 
-    setQuery((prev) => createQueryObject(prev, { category: categoryName }));
+    setQuery((prev) =>
+      createQueryObject(prev, { category: encodeURIComponent(categoryName) })
+    );
   };
 
   if (isLoading) return <Loader />;
@@ -64,7 +64,7 @@ function SearchExplore() {
       <Grid2 container spacing={2}>
         <Grid2 size={{ xs: 12, md: 10 }}>
           <Grid2 container spacing={2}>
-            {display.map((item) => (
+            {display?.map((item) => (
               <Grid2 key={item.id} size={{ xs: 12, md: 4 }}>
                 <CardEl data={item} />
               </Grid2>

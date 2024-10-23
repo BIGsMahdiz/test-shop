@@ -1,18 +1,15 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { createContext, useContext, useState } from "react";
 
 const FilterContext = createContext();
 
 function Filters({ children }) {
   const [query, setQuery] = useState({});
-  const [searhParams, setSearchParams] = useSearchParams();
-
-  //   useEffect(() => {
-  //     setSearchParams(query);
-  //   }, [query]);
+  const [searchResult, setSearchResult] = useState();
 
   return (
-    <FilterContext.Provider value={{ query, setQuery }}>
+    <FilterContext.Provider
+      value={{ query, setQuery, searchResult, setSearchResult }}
+    >
       {children}
     </FilterContext.Provider>
   );
@@ -23,5 +20,10 @@ const useQueryF = () => {
   return [query, setQuery];
 };
 
+const useSearchResult = () => {
+  const { searchResult, setSearchResult } = useContext(FilterContext);
+  return [searchResult, setSearchResult];
+};
+
 export default Filters;
-export { useQueryF };
+export { useQueryF, useSearchResult };
