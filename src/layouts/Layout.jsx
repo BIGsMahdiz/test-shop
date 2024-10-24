@@ -77,6 +77,7 @@ function Layout({ children }) {
 
     if (!data && !data.data) return;
     setSearchResult(data.data);
+    localStorage.setItem("searchData", JSON.stringify(data.data));
     navigate("/search-explore");
     setQuery((prev) =>
       createQueryObject(prev, { search: debouncedSearchValue })

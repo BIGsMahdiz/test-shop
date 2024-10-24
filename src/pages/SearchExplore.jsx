@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
   Avatar,
   Container,
@@ -13,11 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import CardEl from "@/components/templates/CardEl";
 import { getCategories } from "@/services/categories";
-import {
-  categoryFilter,
-  createQueryObject,
-  getInitialQuery,
-} from "@/utils/filters";
+import { categoryFilter, createQueryObject } from "@/utils/filters";
 import Loader from "@/components/modules/Loader";
 import { useQueryF, useSearchResult } from "@/contexts/Filters";
 
@@ -27,6 +23,8 @@ function SearchExplore() {
   const [searchResult, setSearchResult] = useSearchResult();
 
   const [searchParams, setSearchParams] = useSearchParams();
+
+  let savedData = JSON.parse(localStorage.getItem("searchData"));
 
   const { isLoading, data } = useQuery({
     queryKey: ["getAllCategories"],
@@ -39,7 +37,10 @@ function SearchExplore() {
 
   useEffect(() => {
     setSearchParams(query);
-    let filteredData = categoryFilter(searchResult, query.category);
+    let filteredData = categoryFilter(
+      searchResult || savedData,
+      query.category
+    );
 
     setDisplay(filteredData);
   }, [query]);
@@ -64,11 +65,18 @@ function SearchExplore() {
       <Grid2 container spacing={2}>
         <Grid2 size={{ xs: 12, md: 10 }}>
           <Grid2 container spacing={2}>
-            {display?.map((item) => (
-              <Grid2 key={item.id} size={{ xs: 12, md: 4 }}>
-                <CardEl data={item} />
-              </Grid2>
-            ))}
+            {display &&
+              display?.map((item) => (
+                <Grid2 key={item.id} size={{ xs: 12, md: 4 }}>
+                  <CardEl data={item} />
+                </Grid2>
+              ))}
+            {!display &&
+              savedData?.map((item) => (
+                <Grid2 key={item.id} size={{ xs: 12, md: 4 }}>
+                  <CardEl data={item} />
+                </Grid2>
+              ))}
           </Grid2>
         </Grid2>
         <Grid2 size={{ xs: 12, md: 2 }}>
