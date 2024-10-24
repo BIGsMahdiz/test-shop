@@ -32,7 +32,7 @@ function SearchExplore() {
   });
 
   useEffect(() => {
-    setDisplay(searchResult);
+    setDisplay(searchResult || savedData);
   }, [searchResult]);
 
   useEffect(() => {
@@ -67,12 +67,6 @@ function SearchExplore() {
           <Grid2 container spacing={2}>
             {display &&
               display?.map((item) => (
-                <Grid2 key={item.id} size={{ xs: 12, md: 4 }}>
-                  <CardEl data={item} />
-                </Grid2>
-              ))}
-            {!display &&
-              savedData?.map((item) => (
                 <Grid2 key={item.id} size={{ xs: 12, md: 4 }}>
                   <CardEl data={item} />
                 </Grid2>
